@@ -9,7 +9,6 @@ import App from './App.tsx'
  * QueryClient configuration:
  * - retry: false — don't auto-retry failed requests (we handle errors ourselves)
  * - refetchOnWindowFocus: false — don't re-fetch when user switches tabs
- *   (same settings as your daily-chirp project)
  */
 const queryClient = new QueryClient({
   defaultOptions: {
