@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSignup } from "./hooks/useSignup";
 import { SignupForm, SignupFormValues } from "./components/SignupForm";
+import logo from "@/assets/logo.svg";
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function SignupPage() {
       {/* Left panel */}
       <div className="hidden lg:flex w-1/2 bg-primary items-center justify-center">
         <div className="text-center text-white">
-          <img src="/logo.svg" alt="DevTime" className="w-24 mx-auto mb-4" />
+          <img src={logo} alt="DevTime" className="w-24 mx-auto mb-4" />
           <p className="text-lg font-medium">개발자를 위한 타이머</p>
         </div>
       </div>
