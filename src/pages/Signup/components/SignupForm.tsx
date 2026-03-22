@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { CheckCircle2, Circle } from "lucide-react";
 import { useCheckEmail } from "../hooks/useCheckEmail";
 import { useCheckNickname } from "../hooks/useCheckNickname";
 import Input from "@/components/common/Input";

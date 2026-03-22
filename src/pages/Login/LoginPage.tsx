@@ -6,6 +6,7 @@ import LoginForm, { LoginFormValues } from './components/LoginForm'
 import DuplicateLoginModal from './components/DuplicateLoginModal'
 import Modal from '@/components/common/Modal'
 import Button from '@/components/common/Button'
+import logo from '@/assets/logo.png'
 
 /**
  * LoginPage — orchestrates the full login flow:
@@ -71,12 +72,7 @@ function LoginPage() {
       <div className="relative z-10 bg-white rounded-2xl shadow-lg w-[400px] px-10 py-12 flex flex-col items-center gap-8">
 
         {/* Logo */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-xl">&lt;/&gt;</span>
-          </div>
-          <span className="text-primary font-bold text-2xl italic">DevTime</span>
-        </div>
+        <img src={logo} alt="DevTime" className="w-36" />
 
         {/* Form + signup link */}
         <div className="w-full flex flex-col gap-6">

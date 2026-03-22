@@ -50,7 +50,8 @@
     "confirmPassword": "비밀번호 확인",
     "confirmPasswordPlaceholder": "비밀번호를 다시 입력해 주세요.",
     "passwordMismatch": "비밀번호가 일치하지 않습니다.",
-    "agreeTerms": "이용 약관에 동의합니다",
+    "termsLabel": "이용약관",
+    "agree": "동의함",
     "signupButton": "회원가입",
     "hasAccount": "회원이신가요?",
     "goToLogin": "로그인 바로가기"
