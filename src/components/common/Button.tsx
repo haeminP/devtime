@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'ghost'
+  variant?: 'primary' | 'ghost' | 'outline'
   fullWidth?: boolean
 }
 
@@ -21,11 +21,12 @@ function Button({
   children,
   ...props
 }: ButtonProps) {
-  const base = 'py-3 px-6 rounded-lg font-semibold text-sm transition-colors duration-150 cursor-pointer'
+  const base = 'py-3 px-4 rounded-[5px] font-semibold text-sm transition-colors duration-150 cursor-pointer'
 
   const variants = {
-    primary: 'bg-primary text-white hover:bg-primary-600 disabled:bg-gray-300 disabled:cursor-not-allowed',
+    primary: 'bg-primary text-white hover:bg-primary-600 disabled:bg-[#969DA8] disabled:text-[#CCD0D6] disabled:cursor-not-allowed',
     ghost: 'bg-transparent text-primary hover:underline disabled:text-gray-400 disabled:cursor-not-allowed',
+    outline: 'bg-gray-200 text-gray-500 hover:bg-gray-300 disabled:bg-gray-200 disabled:text-[#969DA8] disabled:cursor-not-allowed',
   }
 
   return (

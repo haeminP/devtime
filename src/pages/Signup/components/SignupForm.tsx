@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { CheckCircle2, Circle } from "lucide-react";
+import { Check } from "lucide-react";
 import { useCheckEmail } from "../hooks/useCheckEmail";
 import { useCheckNickname } from "../hooks/useCheckNickname";
 import Input from "@/components/common/Input";
@@ -31,8 +31,12 @@ export function SignupForm({ onSubmit, isPending }: SignupFormProps) {
     register,
     handleSubmit,
     getValues,
+    watch,
+    setValue,
     formState: { errors, isValid },
   } = useForm<SignupFormValues>({ mode: "onBlur" });
+
+  const agreeTerms = watch("agreeTerms");
 
   // Store the result of register() so we can chain our own onChange
   // alongside RHF's without losing either
@@ -56,7 +60,7 @@ export function SignupForm({ onSubmit, isPending }: SignupFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-5">
-      <h1 className="text-xl font-semibold text-primary text-center">
+      <h1 className="text-2xl font-bold text-primary text-center">
         {t("signup.title")}
       </h1>
 
@@ -66,20 +70,22 @@ export function SignupForm({ onSubmit, isPending }: SignupFormProps) {
         <label className="text-sm font-medium text-gray-700">
           {t("auth.emailLabel")}
         </label>
-        <div className="flex gap-2">
-          <Input
-            {...emailField}
-            onChange={(e) => {
-              emailField.onChange(e);
-              // Reset check result whenever the user edits the field again
-              if (emailCheck.isSuccess || emailCheck.isError) emailCheck.reset();
-            }}
-            type="email"
-            placeholder={t("auth.emailPlaceholder")}
-          />
+        <div className="flex gap-3">
+          <div className="flex-1 min-w-0">
+            <Input
+              {...emailField}
+              onChange={(e) => {
+                emailField.onChange(e);
+                if (emailCheck.isSuccess || emailCheck.isError) emailCheck.reset();
+              }}
+              type="email"
+              placeholder={t("auth.emailPlaceholder")}
+            />
+          </div>
           <Button
             type="button"
-            variant="ghost"
+            variant="outline"
+            className="whitespace-nowrap h-11"
             onClick={() => emailCheck.mutate(getValues("email"))}
             disabled={!!errors.email || !getValues("email")}
           >
@@ -102,18 +108,21 @@ export function SignupForm({ onSubmit, isPending }: SignupFormProps) {
         <label className="text-sm font-medium text-gray-700">
           {t("signup.nickname")}
         </label>
-        <div className="flex gap-2">
-          <Input
-            {...nicknameField}
-            onChange={(e) => {
-              nicknameField.onChange(e);
-              if (nicknameCheck.isSuccess || nicknameCheck.isError) nicknameCheck.reset();
-            }}
-            placeholder={t("signup.nicknamePlaceholder")}
-          />
+        <div className="flex gap-3">
+          <div className="flex-1 min-w-0">
+            <Input
+              {...nicknameField}
+              onChange={(e) => {
+                nicknameField.onChange(e);
+                if (nicknameCheck.isSuccess || nicknameCheck.isError) nicknameCheck.reset();
+              }}
+              placeholder={t("signup.nicknamePlaceholder")}
+            />
+          </div>
           <Button
             type="button"
-            variant="ghost"
+            variant="outline"
+            className="whitespace-nowrap h-11"
             onClick={() => nicknameCheck.mutate(getValues("nickname"))}
             disabled={!!errors.nickname || !getValues("nickname")}
           >
@@ -164,15 +173,25 @@ export function SignupForm({ onSubmit, isPending }: SignupFormProps) {
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-gray-700">
-            {t("signup.agreeTerms")}
+            {t("signup.termsLabel")}
           </span>
+          <button
+            type="button"
+            onClick={() => setValue("agreeTerms", !agreeTerms, { shouldValidate: true })}
+            className="flex items-center gap-1 text-sm cursor-pointer text-primary/30"
+          >
+            <span>{t("signup.agree")}</span>
+            <span className={`w-[18px] h-[18px] rounded-[3px] border flex items-center justify-center transition-colors ${agreeTerms ? "bg-primary border-primary" : "border-primary bg-white"}`}>
+              {agreeTerms && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+            </span>
+          </button>
           <input
             type="checkbox"
             {...register("agreeTerms", { validate: (v) => v === true })}
-            className="w-5 h-5 accent-primary cursor-pointer"
+            className="sr-only"
           />
         </div>
-        <div className="h-24 overflow-y-auto rounded-lg border border-gray-200 p-3 text-xs text-gray-500 leading-relaxed">
+        <div className="h-[86px] overflow-y-auto rounded-[5px] bg-gray-50 px-4 py-3 text-xs text-gray-600 leading-relaxed">
           제1조 (목적) 이 약관은 DevTime(이하 "서비스")의 이용 조건 및 절차, 사용자와
           서비스 제공사(회사) 간의 관리, 의무 및 책임사항을 규정함을 목적으로 합니다.
           제2조 (정의) 이 약관에서 사용하는 용어의 정의는 다음과 같습니다.

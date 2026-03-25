@@ -34,8 +34,8 @@ function SignupPage() {
       </div>
 
       {/* Right panel */}
-      <div className="flex flex-1 items-center justify-center px-8 py-12">
-        <div className="w-full max-w-sm">
+      <div className="flex flex-1 items-center justify-center px-8 py-12 bg-white">
+        <div className="w-full max-w-md">
           <SignupForm onSubmit={handleSubmit} isPending={isPending} />
         </div>
       </div>

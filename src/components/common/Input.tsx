@@ -28,11 +28,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={`
-            w-full px-4 py-3 rounded-lg border text-sm
+            w-full px-4 py-3 h-11 rounded-[5px] border-none text-sm bg-gray-50
             focus:outline-none focus:ring-1 transition-colors duration-150
             ${error
-              ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-              : 'border-gray-300 focus:border-primary focus:ring-primary'
+              ? 'focus:ring-red-500'
+              : 'focus:ring-primary'
             }
             disabled:bg-gray-100 disabled:cursor-not-allowed
             ${className}
