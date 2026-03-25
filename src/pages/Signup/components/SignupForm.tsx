@@ -178,11 +178,11 @@ export function SignupForm({ onSubmit, isPending }: SignupFormProps) {
           <button
             type="button"
             onClick={() => setValue("agreeTerms", !agreeTerms, { shouldValidate: true })}
-            className="flex items-center gap-1 text-sm cursor-pointer text-primary/30"
+            className={`flex items-center gap-1 text-sm cursor-pointer ${agreeTerms ? "text-primary" : "text-primary/30"}`}
           >
             <span>{t("signup.agree")}</span>
-            <span className={`w-[18px] h-[18px] rounded-[3px] border flex items-center justify-center transition-colors ${agreeTerms ? "bg-primary border-primary" : "border-primary bg-white"}`}>
-              {agreeTerms && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+            <span className={`w-[18px] h-[18px] rounded-[3px] border border-primary flex items-center justify-center transition-colors ${agreeTerms ? "bg-primary/10" : "bg-white"}`}>
+              {agreeTerms && <Check className="w-3 h-3 text-primary" strokeWidth={3} />}
             </span>
           </button>
           <input
