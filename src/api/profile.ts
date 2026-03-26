@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance'
+import { api } from './fetchClient'
 
 export interface ProfileData {
   career: string
@@ -10,20 +10,20 @@ export interface ProfileData {
 
 export const profileApi = {
   getProfile: () =>
-    axiosInstance.get('/profile'),
+    api.get('/profile'),
 
   createProfile: (data: ProfileData) =>
-    axiosInstance.post('/profile', data),
+    api.post('/profile', data),
 
   updateProfile: (data: Partial<ProfileData>) =>
-    axiosInstance.put('/profile', data),
+    api.put('/profile', data),
 
   getPresignedUrl: () =>
-    axiosInstance.post<{ presignedUrl: string; key: string }>('/file/presigned-url'),
+    api.post<{ presignedUrl: string; key: string }>('/file/presigned-url'),
 
   getTechStacks: (query: string) =>
-    axiosInstance.get('/tech-stacks', { params: { query } }),
+    api.get('/tech-stacks', { params: { query } }),
 
   createTechStack: (name: string) =>
-    axiosInstance.post('/tech-stacks', { name }),
+    api.post('/tech-stacks', { name }),
 }

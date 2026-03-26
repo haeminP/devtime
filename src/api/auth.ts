@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance'
+import { api } from './fetchClient'
 
 export interface LoginRequest {
   email: string
@@ -21,20 +21,17 @@ export interface SignupRequest {
 
 export const authApi = {
   login: (data: LoginRequest) =>
-    axiosInstance.post<LoginResponse>('/auth/login', data),
+    api.post<LoginResponse>('/auth/login', data),
 
   logout: () =>
-    axiosInstance.post('/auth/logout'),
-
-  refresh: (refreshToken: string) =>
-    axiosInstance.post<{ accessToken: string }>('/auth/refresh', { refreshToken }),
+    api.post('/auth/logout'),
 
   signup: (data: SignupRequest) =>
-    axiosInstance.post('/signup', data),
+    api.post('/signup', data),
 
   checkEmail: (email: string) =>
-    axiosInstance.get('/signup/check-email', { params: { email } }),
+    api.get('/signup/check-email', { params: { email } }),
 
   checkNickname: (nickname: string) =>
-    axiosInstance.get('/signup/check-nickname', { params: { nickname } }),
+    api.get('/signup/check-nickname', { params: { nickname } }),
 }

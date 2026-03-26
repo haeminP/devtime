@@ -1,8 +1,8 @@
-import axiosInstance from './axiosInstance'
+import { api } from './fetchClient'
 
 export interface SplitTime {
   date: string
-  timeSpent: number // milliseconds
+  timeSpent: number
 }
 
 export interface StartTimerRequest {
@@ -26,17 +26,17 @@ export interface StopTimerRequest {
 
 export const timerApi = {
   getActiveTimer: () =>
-    axiosInstance.get('/timers'),
+    api.get('/timers'),
 
   startTimer: (data: StartTimerRequest) =>
-    axiosInstance.post<StartTimerResponse>('/timers', data),
+    api.post<StartTimerResponse>('/timers', data),
 
   updateTimer: (timerId: string, data: UpdateTimerRequest) =>
-    axiosInstance.put(`/timers/${timerId}`, data),
+    api.put(`/timers/${timerId}`, data),
 
   stopTimer: (timerId: string, data: StopTimerRequest) =>
-    axiosInstance.get(`/timers/${timerId}/stop`, { params: data }),
+    api.get(`/timers/${timerId}/stop`, { params: data as unknown as Record<string, string | number> }),
 
   deleteTimer: (timerId: string) =>
-    axiosInstance.delete(`/timers/${timerId}`),
+    api.delete(`/timers/${timerId}`),
 }
