@@ -6,15 +6,10 @@ interface AuthState {
   refreshToken: string | null;
   isAuthenticated: boolean;
 
-  // Actions
   setTokens: (accessToken: string, refreshToken: string) => void;
   clearTokens: () => void;
 }
 
-/**
- * Auth store — persists tokens to localStorage so the user stays
- * logged in across page refreshes.
- */
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
@@ -29,8 +24,7 @@ export const useAuthStore = create<AuthState>()(
         set({ accessToken: null, refreshToken: null, isAuthenticated: false }),
     }),
     {
-      name: "devtime-auth", // key in localStorage
-      // Only persist the tokens, not the actions
+      name: "devtime-auth",
       partialize: (state) => ({
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,

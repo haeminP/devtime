@@ -33,7 +33,7 @@ function LoginPage() {
       { email: values.email, password: values.password },
       {
         onSuccess: (response) => {
-          const { isFirstLogin, isDuplicateLogin } = response.data
+          const { isFirstLogin, isDuplicateLogin } = response
 
           if (isDuplicateLogin) {
             setShowDuplicateModal(true)
@@ -51,7 +51,7 @@ function LoginPage() {
 
   const handleDuplicateConfirm = () => {
     setShowDuplicateModal(false)
-    const isFirstLogin = data?.data.isFirstLogin
+    const isFirstLogin = data?.isFirstLogin
     navigate(isFirstLogin ? '/profile-setup' : '/', { replace: true })
   }
 
