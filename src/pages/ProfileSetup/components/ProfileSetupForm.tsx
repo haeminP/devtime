@@ -2,6 +2,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import Button from '@/components/common/Button'
 import Dropdown from '@/components/common/Dropdown'
+import Input from '@/components/common/Input'
 
 export interface ProfileSetupFormValues {
   career: string
@@ -29,10 +30,14 @@ interface ProfileSetupFormProps {
 function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps) {
   const { t } = useTranslation()
 
+  const GOAL_MAX_LENGTH = 30
+
   const {
     control,
+    register,
+    watch,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm<ProfileSetupFormValues>({
     mode: 'onChange',
     defaultValues: {
@@ -43,6 +48,8 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
       profileImage: '',
     },
   })
+
+  const goalValue = watch('goal')
 
   const careerOptions = [
     { value: 'none', label: t('profile.careerOptions.none') },
@@ -109,7 +116,24 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
         )}
       />
 
-      {/* TODO: goal input, tech stacks, profile image (next steps) */}
+      {/* Study goal input */}
+      <div className="flex flex-col gap-2">
+        <Input
+          {...register('goal', {
+            required: true,
+            maxLength: GOAL_MAX_LENGTH,
+          })}
+          label={t('profile.goal')}
+          placeholder={t('profile.goalPlaceholder')}
+          error={errors.goal?.type === 'maxLength' ? `최대 ${GOAL_MAX_LENGTH}자까지 입력할 수 있습니다.` : undefined}
+        />
+        {/* Character counter */}
+        <p className={`text-xs text-right ${goalValue?.length >= GOAL_MAX_LENGTH ? 'text-red-500' : 'text-gray-400'}`}>
+          {goalValue?.length ?? 0} / {GOAL_MAX_LENGTH}
+        </p>
+      </div>
+
+      {/* TODO: tech stacks, profile image (next steps) */}
 
       {/* Save button */}
       <Button type="submit" fullWidth disabled={!isValid || isPending}>
