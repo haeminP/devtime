@@ -54,19 +54,19 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
   const goalValue = watch('goal')
 
   const careerOptions = [
-    { value: 'none', label: t('profile.careerOptions.none') },
-    { value: 'junior', label: t('profile.careerOptions.junior') },
-    { value: 'mid', label: t('profile.careerOptions.mid') },
-    { value: 'senior', label: t('profile.careerOptions.senior') },
-    { value: 'expert', label: t('profile.careerOptions.expert') },
+    { value: '경력 없음', label: t('profile.careerOptions.none') },
+    { value: '0-3년', label: t('profile.careerOptions.junior') },
+    { value: '4-7년', label: t('profile.careerOptions.mid') },
+    { value: '8-10년', label: t('profile.careerOptions.senior') },
+    { value: '11년 이상', label: t('profile.careerOptions.expert') },
   ]
 
   const purposeOptions = [
-    { value: 'jobSearch', label: t('profile.purposeOptions.jobSearch') },
-    { value: 'careerChange', label: t('profile.purposeOptions.careerChange') },
-    { value: 'skillUp', label: t('profile.purposeOptions.skillUp') },
-    { value: 'work', label: t('profile.purposeOptions.work') },
-    { value: 'other', label: t('profile.purposeOptions.other') },
+    { value: '취업 준비', label: t('profile.purposeOptions.jobSearch') },
+    { value: '이직 준비', label: t('profile.purposeOptions.careerChange') },
+    { value: '단순 개발 역량 향상', label: t('profile.purposeOptions.skillUp') },
+    { value: '회사 내 프로젝트 원활하게 수행', label: t('profile.purposeOptions.work') },
+    { value: '기타(직접 입력)', label: t('profile.purposeOptions.other') },
   ]
 
   return (
