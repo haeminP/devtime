@@ -1,8 +1,12 @@
 import { api } from './fetchClient'
 
+export type PurposeValue =
+  | string
+  | { type: string; detail: string }
+
 export interface ProfileData {
   career: string
-  purpose: string
+  purpose: PurposeValue
   goal: string
   techStacks: string[]
   profileImage?: string

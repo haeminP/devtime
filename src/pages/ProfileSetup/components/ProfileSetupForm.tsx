@@ -6,9 +6,11 @@ import Input from '@/components/common/Input'
 import TechStackInput from './TechStackInput'
 import ProfileImageUpload from './ProfileImageUpload'
 
+import type { PurposeValue } from '@/api/profile'
+
 export interface ProfileSetupFormValues {
   career: string
-  purpose: string
+  purpose: PurposeValue
   goal: string
   techStacks: string[]
   profileImage?: string
@@ -76,7 +78,9 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
     const { customPurpose, ...rest } = values
     onSubmit({
       ...rest,
-      purpose: isOtherPurpose ? customPurpose : values.purpose,
+      purpose: isOtherPurpose
+        ? { type: OTHER_PURPOSE, detail: customPurpose }
+        : values.purpose,
     })
   }
 
