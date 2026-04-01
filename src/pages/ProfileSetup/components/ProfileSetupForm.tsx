@@ -14,21 +14,19 @@ export interface ProfileSetupFormValues {
   profileImage?: string
 }
 
+// Internal form state — includes customPurpose which gets merged before submit
+interface FormValues extends ProfileSetupFormValues {
+  customPurpose: string
+}
+
+const OTHER_PURPOSE = '기타(직접 입력)'
+
 interface ProfileSetupFormProps {
   onSubmit: (values: ProfileSetupFormValues) => void
   onSkip: () => void
   isPending: boolean
 }
 
-/**
- * ProfileSetupForm — collects career, purpose, goal, tech stacks, and profile image.
- *
- * Validation strategy: all fields required except profileImage.
- * Save button is disabled until the form is fully valid.
- *
- * react-hook-form's Controller bridges our custom Dropdown (uncontrolled by RHF)
- * into the form state — it passes value + onChange down as props.
- */
 function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps) {
   const { t } = useTranslation()
 
@@ -40,11 +38,12 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
     watch,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm<ProfileSetupFormValues>({
+  } = useForm<FormValues>({
     mode: 'onChange',
     defaultValues: {
       career: '',
       purpose: '',
+      customPurpose: '',
       goal: '',
       techStacks: [],
       profileImage: '',
@@ -52,6 +51,8 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
   })
 
   const goalValue = watch('goal')
+  const purposeValue = watch('purpose')
+  const isOtherPurpose = purposeValue === OTHER_PURPOSE
 
   const careerOptions = [
     { value: '경력 없음', label: t('profile.careerOptions.none') },
@@ -66,24 +67,32 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
     { value: '이직 준비', label: t('profile.purposeOptions.careerChange') },
     { value: '단순 개발 역량 향상', label: t('profile.purposeOptions.skillUp') },
     { value: '회사 내 프로젝트 원활하게 수행', label: t('profile.purposeOptions.work') },
-    { value: '기타(직접 입력)', label: t('profile.purposeOptions.other') },
+    { value: OTHER_PURPOSE, label: t('profile.purposeOptions.other') },
   ]
 
+  // Transform form values before passing to the page:
+  // if "Other" is selected, replace purpose with the custom text
+  function handleFormSubmit(values: FormValues) {
+    const { customPurpose, ...rest } = values
+    onSubmit({
+      ...rest,
+      purpose: isOtherPurpose ? customPurpose : values.purpose,
+    })
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10 w-full">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col gap-10 w-full">
       {/* Title + skip link */}
-      <div className="flex flex-col gap-1">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-800">{t('profile.title')}</h1>
-          <button
-            type="button"
-            onClick={onSkip}
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            Want to do it later?{' '}
-            <span className="font-bold underline underline-offset-2">Skip</span>
-          </button>
-        </div>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-gray-800">{t('profile.title')}</h1>
+        <button
+          type="button"
+          onClick={onSkip}
+          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          Want to do it later?{' '}
+          <span className="font-bold underline underline-offset-2">Skip</span>
+        </button>
       </div>
 
       {/* Career dropdown */}
@@ -102,21 +111,31 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
         )}
       />
 
-      {/* Purpose dropdown */}
-      <Controller
-        name="purpose"
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <Dropdown
-            label={t('profile.purpose')}
-            options={purposeOptions}
-            placeholder="Select your learning purpose"
-            value={field.value}
-            onChange={field.onChange}
+      {/* Purpose dropdown + optional custom input */}
+      <div className="flex flex-col gap-3">
+        <Controller
+          name="purpose"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Dropdown
+              label={t('profile.purpose')}
+              options={purposeOptions}
+              placeholder="Select your learning purpose"
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+
+        {/* Extra input shown only when "Other" is selected */}
+        {isOtherPurpose && (
+          <Input
+            {...register('customPurpose', { required: isOtherPurpose })}
+            placeholder={t('profile.otherPurposePlaceholder')}
           />
         )}
-      />
+      </div>
 
       {/* Study goal input */}
       <div className="flex flex-col gap-2">
@@ -129,7 +148,6 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
           placeholder={t('profile.goalPlaceholder')}
           error={errors.goal?.type === 'maxLength' ? `Maximum ${GOAL_MAX_LENGTH} characters allowed.` : undefined}
         />
-        {/* Character counter */}
         <p className={`text-xs text-right ${goalValue?.length >= GOAL_MAX_LENGTH ? 'text-red-500' : 'text-gray-400'}`}>
           {goalValue?.length ?? 0} / {GOAL_MAX_LENGTH}
         </p>
