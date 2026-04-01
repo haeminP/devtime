@@ -63,10 +63,9 @@ function TechStackInput({ value, onChange }: TechStackInputProps) {
       setIsLoading(true)
       try {
         const data = await profileApi.getTechStacks(input.trim())
-        // Filter out already-selected stacks from results
-        const filtered = (data as string[]).filter(
-          (stack) => !value.includes(stack)
-        )
+        const filtered = data.results
+          .map((item) => item.name)
+          .filter((name) => !value.includes(name))
         setResults(filtered)
         setIsOpen(true)
       } catch {
