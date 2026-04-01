@@ -79,7 +79,7 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
     onSubmit({
       ...rest,
       purpose: isOtherPurpose
-        ? { type: OTHER_PURPOSE, detail: customPurpose }
+        ? { type: '기타', detail: customPurpose }
         : values.purpose,
     })
   }
