@@ -122,7 +122,7 @@ function TechStackInput({ value, onChange }: TechStackInputProps) {
         {isOpen && (
           <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-[5px] shadow-md overflow-hidden max-h-48 overflow-y-auto">
             {isLoading ? (
-              <li className="px-4 py-3 text-sm text-gray-400">검색 중...</li>
+              <li className="px-4 py-3 text-sm text-gray-400">Searching...</li>
             ) : results.length > 0 ? (
               results.map((stack) => (
                 <li
@@ -135,7 +135,7 @@ function TechStackInput({ value, onChange }: TechStackInputProps) {
               ))
             ) : (
               <li className="text-sm text-gray-400 px-4 py-3">
-                검색 결과가 없습니다.
+                No results found.
               </li>
             )}
 
@@ -146,7 +146,7 @@ function TechStackInput({ value, onChange }: TechStackInputProps) {
                 className="flex items-center gap-2 px-4 py-3 text-sm text-primary cursor-pointer hover:bg-primary/5 border-t border-gray-100"
               >
                 <Plus size={16} />
-                <span>"{query.trim()}" 추가하기</span>
+                <span>Add "{query.trim()}"</span>
               </li>
             )}
           </ul>

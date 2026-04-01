@@ -80,8 +80,8 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
             onClick={onSkip}
             className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
           >
-            다음에 하시겠어요?{' '}
-            <span className="font-bold underline underline-offset-2">건너뛰기</span>
+            Want to do it later?{' '}
+            <span className="font-bold underline underline-offset-2">Skip</span>
           </button>
         </div>
       </div>
@@ -95,7 +95,7 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
           <Dropdown
             label={t('profile.career')}
             options={careerOptions}
-            placeholder="개발 경력을 선택해 주세요."
+            placeholder="Select your experience level"
             value={field.value}
             onChange={field.onChange}
           />
@@ -111,7 +111,7 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
           <Dropdown
             label={t('profile.purpose')}
             options={purposeOptions}
-            placeholder="공부의 목적을 선택해 주세요."
+            placeholder="Select your learning purpose"
             value={field.value}
             onChange={field.onChange}
           />
@@ -127,7 +127,7 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
           })}
           label={t('profile.goal')}
           placeholder={t('profile.goalPlaceholder')}
-          error={errors.goal?.type === 'maxLength' ? `최대 ${GOAL_MAX_LENGTH}자까지 입력할 수 있습니다.` : undefined}
+          error={errors.goal?.type === 'maxLength' ? `Maximum ${GOAL_MAX_LENGTH} characters allowed.` : undefined}
         />
         {/* Character counter */}
         <p className={`text-xs text-right ${goalValue?.length >= GOAL_MAX_LENGTH ? 'text-red-500' : 'text-gray-400'}`}>

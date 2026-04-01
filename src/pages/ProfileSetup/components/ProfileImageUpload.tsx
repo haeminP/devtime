@@ -28,11 +28,11 @@ function ProfileImageUpload({ onChange }: ProfileImageUploadProps) {
 
     // Validate before uploading
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setError('.png 또는 .jpg 파일만 업로드할 수 있습니다.')
+      setError('Only .png or .jpg files are allowed.')
       return
     }
     if (file.size > MAX_SIZE_BYTES) {
-      setError('파일 크기는 5MB 이하여야 합니다.')
+      setError('File size must be under 5MB.')
       return
     }
 
@@ -58,7 +58,7 @@ function ProfileImageUpload({ onChange }: ProfileImageUploadProps) {
       // Step 3: tell the form about the key (not the file, not the URL — just the key)
       onChange(key)
     } catch {
-      setError('업로드 중 오류가 발생했습니다. 다시 시도해 주세요.')
+      setError('Upload failed. Please try again.')
       setPreview(null)
     } finally {
       setIsUploading(false)
@@ -69,7 +69,7 @@ function ProfileImageUpload({ onChange }: ProfileImageUploadProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium text-gray-600">프로필 이미지</label>
+      <label className="text-sm font-medium text-gray-600">Profile Image</label>
 
       <div className="flex items-end gap-3">
         {/* Custom upload box */}
@@ -87,7 +87,7 @@ function ProfileImageUpload({ onChange }: ProfileImageUploadProps) {
         </button>
 
         {/* Hint text */}
-        <p className="text-sm text-gray-400">5MB 미만의 .png, .jpg 파일</p>
+        <p className="text-sm text-gray-400">Under 5MB — .png or .jpg only</p>
       </div>
 
       {/* Hidden real file input */}
@@ -99,7 +99,7 @@ function ProfileImageUpload({ onChange }: ProfileImageUploadProps) {
         className="hidden"
       />
 
-      {isUploading && <p className="text-xs text-gray-400">업로드 중...</p>}
+      {isUploading && <p className="text-xs text-gray-400">Uploading...</p>}
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   )

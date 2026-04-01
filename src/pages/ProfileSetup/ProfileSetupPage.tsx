@@ -34,7 +34,7 @@ function ProfileSetupPage() {
       <div className="hidden lg:flex w-1/2 bg-primary items-center justify-center">
         <div className="flex flex-col items-center gap-9">
           <img src={logoWhite} alt="DevTime" className="w-[264px]" />
-          <p className="text-xl font-semibold text-white">개발자를 위한 타이머</p>
+          <p className="text-xl font-semibold text-white">A Timer for Developers</p>
         </div>
       </div>
 
