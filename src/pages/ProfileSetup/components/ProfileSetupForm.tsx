@@ -55,9 +55,9 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
 
   const careerOptions = [
     { value: '경력 없음', label: t('profile.careerOptions.none') },
-    { value: '0-3년', label: t('profile.careerOptions.junior') },
-    { value: '4-7년', label: t('profile.careerOptions.mid') },
-    { value: '8-10년', label: t('profile.careerOptions.senior') },
+    { value: '0 - 3년', label: t('profile.careerOptions.junior') },
+    { value: '4 - 7년', label: t('profile.careerOptions.mid') },
+    { value: '8 - 10년', label: t('profile.careerOptions.senior') },
     { value: '11년 이상', label: t('profile.careerOptions.expert') },
   ]
 
