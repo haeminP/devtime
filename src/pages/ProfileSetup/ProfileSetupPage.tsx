@@ -5,22 +5,30 @@ import logoWhite from '@/assets/logo-white.png'
 import ProfileSetupForm, { ProfileSetupFormValues } from './components/ProfileSetupForm'
 import Modal from '@/components/common/Modal'
 import Button from '@/components/common/Button'
+import { useCreateProfile } from './hooks/useCreateProfile'
 
-/**
- * ProfileSetupPage — shown only on first login (isFirstLogin: true).
- *
- * Layout mirrors Signup/Login: left blue panel + right white form panel.
- * The form submission and skip flow are orchestrated here;
- * ProfileSetupForm only knows about field values.
- */
 function ProfileSetupPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [showSkipModal, setShowSkipModal] = useState(false)
-  const isPending = false // will be replaced with useMutation in a later step
+  const [showErrorModal, setShowErrorModal] = useState(false)
+
+  const { mutate: createProfile, isPending } = useCreateProfile()
 
   function handleSubmit(values: ProfileSetupFormValues) {
-    console.log('submit', values) // temporary — API call wired up later
+    createProfile(
+      {
+        career: values.career,
+        purpose: values.purpose,
+        goal: values.goal,
+        techStacks: values.techStacks,
+        profileImage: values.profileImage,
+      },
+      {
+        onSuccess: () => navigate('/', { replace: true }),
+        onError: () => setShowErrorModal(true),
+      }
+    )
   }
 
   function handleSkipConfirm() {
@@ -64,6 +72,18 @@ function ProfileSetupPage() {
               {t('common.cancel')}
             </Button>
           </div>
+        </div>
+      </Modal>
+
+      {/* Error modal */}
+      <Modal isOpen={showErrorModal}>
+        <div className="flex flex-col gap-4">
+          <p className="text-sm font-semibold text-gray-900">
+            Failed to save profile. Please try again.
+          </p>
+          <Button fullWidth onClick={() => setShowErrorModal(false)}>
+            {t('common.confirm')}
+          </Button>
         </div>
       </Modal>
     </div>
