@@ -21,8 +21,8 @@ export const profileApi = {
   getPresignedUrl: (fileName: string, contentType: string) =>
     api.post<{ presignedUrl: string; key: string }>('/file/presigned-url', { fileName, contentType }),
 
-  getTechStacks: (query: string) =>
-    api.get<{ results: { id: number; name: string }[] }>('/tech-stacks', { params: { query } }),
+  getTechStacks: (keyword: string) =>
+    api.get<{ results: { id: number; name: string }[] }>('/tech-stacks', { params: { keyword } }),
 
   createTechStack: (name: string) =>
     api.post('/tech-stacks', { name }),
