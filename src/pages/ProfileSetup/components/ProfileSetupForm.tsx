@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Button from '@/components/common/Button'
 import Dropdown from '@/components/common/Dropdown'
 import Input from '@/components/common/Input'
+import TechStackInput from './TechStackInput'
 
 export interface ProfileSetupFormValues {
   career: string
@@ -133,7 +134,17 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
         </p>
       </div>
 
-      {/* TODO: tech stacks, profile image (next steps) */}
+      {/* Tech stacks autocomplete */}
+      <Controller
+        name="techStacks"
+        control={control}
+        rules={{ validate: (v) => v.length > 0 }}
+        render={({ field }) => (
+          <TechStackInput value={field.value} onChange={field.onChange} />
+        )}
+      />
+
+      {/* TODO: profile image (next step) */}
 
       {/* Save button */}
       <Button type="submit" fullWidth disabled={!isValid || isPending}>
