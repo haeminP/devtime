@@ -4,6 +4,7 @@ import Button from '@/components/common/Button'
 import Dropdown from '@/components/common/Dropdown'
 import Input from '@/components/common/Input'
 import TechStackInput from './TechStackInput'
+import ProfileImageUpload from './ProfileImageUpload'
 
 export interface ProfileSetupFormValues {
   career: string
@@ -144,7 +145,14 @@ function ProfileSetupForm({ onSubmit, onSkip, isPending }: ProfileSetupFormProps
         )}
       />
 
-      {/* TODO: profile image (next step) */}
+      {/* Profile image upload */}
+      <Controller
+        name="profileImage"
+        control={control}
+        render={({ field }) => (
+          <ProfileImageUpload onChange={field.onChange} />
+        )}
+      />
 
       {/* Save button */}
       <Button type="submit" fullWidth disabled={!isValid || isPending}>

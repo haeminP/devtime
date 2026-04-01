@@ -18,8 +18,8 @@ export const profileApi = {
   updateProfile: (data: Partial<ProfileData>) =>
     api.put('/profile', data),
 
-  getPresignedUrl: () =>
-    api.post<{ presignedUrl: string; key: string }>('/file/presigned-url'),
+  getPresignedUrl: (fileName: string, contentType: string) =>
+    api.post<{ presignedUrl: string; key: string }>('/file/presigned-url', { fileName, contentType }),
 
   getTechStacks: (query: string) =>
     api.get('/tech-stacks', { params: { query } }),
